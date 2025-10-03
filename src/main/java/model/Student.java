@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "students")
-public class Student {
+public class Student extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,8 @@ public class Student {
 
     private String name;
     private String email;
-    private String rank;
+    @Convert(converter = rankConverter.class)
+    private aikidoRank rank;
     private LocalDate joinDate;
 
     @Column(name = "created_at", updatable = false)
@@ -37,23 +38,13 @@ public class Student {
 
     public Student() {}
 
-    public Student(String name, String email, String rank, LocalDate joinDate) {
+    public Student(String name, String email, String  rank, LocalDate joinDate) {
         this.name = name;
         this.email = email;
-        this.rank = rank;
+        this.rank = aikidoRank.valueOf(rank);
         this.joinDate = joinDate;
     }
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = createdAt;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     @PostLoad
     protected void calculateMembershipDuration() {
@@ -64,7 +55,7 @@ public class Student {
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
-    public String getRank() { return rank; }
+    public aikidoRank getRank() { return rank; }
     public LocalDate getJoinDate() { return joinDate; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
@@ -73,7 +64,7 @@ public class Student {
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
-    public void setRank(String rank) { this.rank = rank; }
+    public void setRank(String rank) { this.rank = aikidoRank.valueOf(rank); }
     public void setJoinDate(LocalDate joinDate) { this.joinDate = joinDate; }
     public void setTrainingSessions(List<TrainingSession> trainingSessions) { this.trainingSessions = trainingSessions; }
 }

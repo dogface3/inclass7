@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "training_sessions")
-public class TrainingSession {
+public class TrainingSession extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

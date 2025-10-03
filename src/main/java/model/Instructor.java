@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "instructors")
-public class Instructor {
+public class Instructor extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

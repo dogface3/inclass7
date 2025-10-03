@@ -1,4 +1,4 @@
 package model;
 
-public class Attendance {
+public class Attendance extends BaseEntity {
 }
